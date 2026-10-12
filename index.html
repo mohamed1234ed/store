@@ -1,0 +1,1225 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#8bbe45">
+    <title>آنية المنزل الراقي | واجهة المتجر</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --brand-primary: #8bbe45;
+            --brand-primary-dark: #62872f;
+            --brand-secondary: #000000;
+            --brand-support: #588157;
+            --brand-heading: #202020;
+            --brand-text: #000000;
+            --brand-muted: #696969;
+            --brand-border: #dddddd;
+            --brand-background: #f8fcf5;
+            --brand-surface: #ffffff;
+            --brand-warning: #e0b252;
+            --shadow: 0 18px 44px rgb(0 0 0 / 12%);
+            font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-width: 320px;
+            background: var(--brand-background);
+            color: var(--brand-text);
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            color: inherit;
+        }
+
+        .site-header {
+            position: relative;
+            z-index: 5;
+            background: var(--brand-surface);
+            box-shadow: 0 2px 12px rgb(0 0 0 / 7%);
+        }
+
+        .utility-strip {
+            height: 34px;
+            background: var(--brand-primary);
+            color: var(--brand-secondary);
+            font-size: 11px;
+        }
+
+        .utility-inner,
+        .header-main,
+        .nav-inner {
+            width: min(1320px, calc(100% - 64px));
+            margin: 0 auto;
+        }
+
+        .utility-inner {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .utility-message {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .utility-message svg {
+            color: var(--brand-secondary);
+        }
+
+        .utility-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        .utility-links button {
+            border: 0;
+            padding: 0;
+            background: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .utility-links button:hover {
+            color: var(--brand-surface);
+        }
+
+        .header-main {
+            min-height: 100px;
+            display: grid;
+            grid-template-columns: 230px minmax(240px, 1fr) auto;
+            align-items: center;
+            gap: 34px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--brand-heading);
+            min-width: 0;
+        }
+
+        .brand-mark {
+            width: 48px;
+            height: 48px;
+            flex: 0 0 48px;
+            border: 1px solid var(--brand-border);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: var(--brand-primary-dark);
+            background: var(--brand-background);
+        }
+
+        .brand-mark svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .brand-copy {
+            display: grid;
+            gap: 4px;
+        }
+
+        .brand-name {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.35;
+            white-space: nowrap;
+        }
+
+        .brand-tagline {
+            font-size: 10px;
+            color: var(--brand-muted);
+            letter-spacing: .15px;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-form {
+            display: flex;
+            align-items: stretch;
+            height: 48px;
+            border: 1px solid var(--brand-border);
+            border-radius: 5px;
+            background: var(--brand-surface);
+            overflow: hidden;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .search-form:focus-within {
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 3px rgb(139 190 69 / 16%);
+        }
+
+        .search-form input {
+            min-width: 0;
+            flex: 1;
+            border: 0;
+            outline: 0;
+            padding: 0 17px;
+            color: var(--brand-text);
+            background: transparent;
+            font-size: 13px;
+        }
+
+        .search-form input::placeholder {
+            color: var(--brand-muted);
+        }
+
+        .search-submit {
+            width: 56px;
+            border: 0;
+            display: grid;
+            place-items: center;
+            background: var(--brand-primary);
+            color: var(--brand-secondary);
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+        .search-submit:hover {
+            background: var(--brand-primary-dark);
+            color: var(--brand-surface);
+        }
+
+        .search-submit svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: calc(100% + 7px);
+            right: 0;
+            left: 0;
+            display: none;
+            padding: 8px;
+            border: 1px solid var(--brand-border);
+            border-radius: 5px;
+            background: var(--brand-surface);
+            box-shadow: var(--shadow);
+            z-index: 12;
+        }
+
+        .search-suggestions.is-open {
+            display: block;
+        }
+
+        .suggestion-title {
+            padding: 7px 10px;
+            color: var(--brand-muted);
+            font-size: 11px;
+        }
+
+        .suggestion-item {
+            width: 100%;
+            padding: 10px;
+            border: 0;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            background: transparent;
+            text-align: right;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .suggestion-item:hover {
+            background: var(--brand-background);
+        }
+
+        .suggestion-item span:last-child {
+            color: var(--brand-muted);
+            font-size: 11px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .action-button {
+            position: relative;
+            min-width: 48px;
+            min-height: 50px;
+            padding: 4px 0;
+            border: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            background: transparent;
+            color: var(--brand-heading);
+            cursor: pointer;
+        }
+
+        .action-button svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 1.7;
+        }
+
+        .action-label {
+            color: var(--brand-muted);
+            font-size: 10px;
+            white-space: nowrap;
+        }
+
+        .action-button:hover .action-label,
+        .action-button:hover svg {
+            color: var(--brand-primary-dark);
+        }
+
+        .action-count {
+            position: absolute;
+            top: 0;
+            right: 50%;
+            transform: translateX(-5px);
+            min-width: 16px;
+            height: 16px;
+            padding: 0 4px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: var(--brand-primary);
+            color: var(--brand-secondary);
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+        }
+
+        .nav-bar {
+            position: relative;
+            border-top: 1px solid var(--brand-border);
+            border-bottom: 1px solid var(--brand-border);
+            background: var(--brand-surface);
+            color: var(--brand-text);
+        }
+
+        .nav-inner {
+            min-height: 48px;
+            display: flex;
+            align-items: stretch;
+            gap: 5px;
+        }
+
+        .nav-link {
+            position: relative;
+            border: 0;
+            padding: 0 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--brand-text);
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background .18s, color .18s;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus-visible {
+            background: rgb(139 190 69 / 12%);
+            color: var(--brand-heading);
+            outline: none;
+        }
+
+        .nav-link.is-current {
+            color: var(--brand-primary-dark);
+        }
+
+        .nav-link.all-departments {
+            padding-inline: 18px;
+            background: var(--brand-primary);
+            color: var(--brand-secondary);
+            font-weight: 700;
+        }
+
+        .nav-link.all-departments:hover,
+        .nav-link.all-departments[aria-expanded="true"] {
+            background: var(--brand-primary-dark);
+            color: var(--brand-surface);
+        }
+
+        .nav-link svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .nav-spacer {
+            flex: 1;
+        }
+
+        .nav-promise {
+            align-self: center;
+            color: var(--brand-muted);
+            font-size: 10px;
+            white-space: nowrap;
+        }
+
+        .mega-menu {
+            position: absolute;
+            top: 100%;
+            right: max(32px, calc((100% - 1320px) / 2));
+            left: max(32px, calc((100% - 1320px) / 2));
+            z-index: 20;
+            display: none;
+            border: 1px solid var(--brand-border);
+            border-top: 2px solid var(--brand-primary);
+            background: var(--brand-surface);
+            box-shadow: var(--shadow);
+        }
+
+        .mega-menu.is-open {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 240px;
+            animation: reveal .18s ease-out;
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mega-content {
+            padding: 27px 30px 30px;
+        }
+
+        .mega-heading {
+            margin: 0 0 20px;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .mega-heading h2 {
+            margin: 0;
+            color: var(--brand-heading);
+            font-size: 17px;
+        }
+
+        .mega-heading p {
+            margin: 0;
+            color: var(--brand-muted);
+            font-size: 11px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 22px 27px;
+        }
+
+        .category-group {
+            min-width: 0;
+        }
+
+        .category-title {
+            width: 100%;
+            margin: 0 0 10px;
+            padding: 0 0 9px;
+            border: 0;
+            border-bottom: 1px solid var(--brand-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: none;
+            color: var(--brand-heading);
+            text-align: right;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .category-title svg {
+            width: 15px;
+            height: 15px;
+            color: var(--brand-primary-dark);
+        }
+
+        .category-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .category-list button {
+            width: fit-content;
+            padding: 0;
+            border: 0;
+            background: none;
+            color: var(--brand-muted);
+            text-align: right;
+            font-size: 11px;
+            cursor: pointer;
+            transition: color .15s, transform .15s;
+        }
+
+        .category-list button:hover {
+            color: var(--brand-primary-dark);
+            transform: translateX(-3px);
+        }
+
+        .mega-aside {
+            padding: 28px 23px;
+            background: var(--brand-background);
+            border-right: 1px solid var(--brand-border);
+        }
+
+        .aside-kicker {
+            margin: 0 0 10px;
+            color: var(--brand-support);
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .mega-aside h3 {
+            margin: 0 0 9px;
+            color: var(--brand-heading);
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .mega-aside p {
+            margin: 0 0 18px;
+            color: var(--brand-muted);
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        .aside-link {
+            padding: 10px 13px;
+            border: 1px solid var(--brand-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--brand-heading);
+            font-size: 11px;
+            cursor: pointer;
+            transition: background .15s;
+        }
+
+        .aside-link:hover {
+            background: rgb(139 190 69 / 16%);
+        }
+
+        .aside-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .popover {
+            position: absolute;
+            top: calc(100% - 4px);
+            left: max(32px, calc((100% - 1320px) / 2));
+            z-index: 30;
+            width: 265px;
+            display: none;
+            padding: 18px;
+            border: 1px solid var(--brand-border);
+            background: var(--brand-surface);
+            box-shadow: var(--shadow);
+        }
+
+        .popover.is-open {
+            display: block;
+            animation: reveal .16s ease-out;
+        }
+
+        .popover h3 {
+            margin: 0 0 7px;
+            color: var(--brand-heading);
+            font-size: 14px;
+        }
+
+        .popover p {
+            margin: 0 0 13px;
+            color: var(--brand-muted);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .popover button {
+            width: 100%;
+            padding: 10px 12px;
+            border: 0;
+            background: var(--brand-primary);
+            color: var(--brand-secondary);
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .toast {
+            position: fixed;
+            right: 50%;
+            bottom: 24px;
+            z-index: 50;
+            max-width: calc(100% - 32px);
+            padding: 12px 18px;
+            transform: translate(50%, 12px);
+            border: 1px solid var(--brand-support);
+            border-radius: 3px;
+            background: var(--brand-heading);
+            color: var(--brand-surface);
+            box-shadow: var(--shadow);
+            font-size: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s, transform .2s;
+        }
+
+        .toast.is-visible {
+            opacity: 1;
+            transform: translate(50%, 0);
+        }
+
+        .header-stage {
+            min-height: calc(100vh - 182px);
+            background-image: radial-gradient(rgb(88 129 87 / 12%) 0.75px, transparent 0.75px);
+            background-size: 20px 20px;
+            opacity: .75;
+        }
+
+        @media (max-width: 1100px) {
+            .nav-inner {
+                overflow-x: auto;
+                scrollbar-width: none;
+            }
+
+            .nav-inner::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .header-main {
+                grid-template-columns: 205px minmax(200px, 1fr) auto;
+                gap: 20px;
+            }
+
+            .header-actions {
+                gap: 12px;
+            }
+
+            .nav-inner {
+                width: calc(100% - 32px);
+            }
+
+            .nav-link {
+                padding-inline: 11px;
+                font-size: 11px;
+            }
+
+            .nav-promise {
+                display: none;
+            }
+
+            .mega-menu {
+                right: 16px;
+                left: 16px;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            .utility-strip {
+                height: 30px;
+            }
+
+            .utility-inner,
+            .header-main {
+                width: calc(100% - 32px);
+            }
+
+            .utility-links {
+                display: none;
+            }
+
+            .utility-inner {
+                justify-content: center;
+            }
+
+            .header-main {
+                min-height: 0;
+                padding: 15px 0 13px;
+                grid-template-columns: 1fr auto;
+                gap: 14px 12px;
+            }
+
+            .brand {
+                grid-column: 1;
+                grid-row: 1;
+                gap: 9px;
+            }
+
+            .brand-mark {
+                width: 40px;
+                height: 40px;
+                flex-basis: 40px;
+            }
+
+            .brand-mark svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            .brand-name {
+                font-size: 14px;
+            }
+
+            .brand-tagline {
+                font-size: 9px;
+            }
+
+            .header-actions {
+                grid-column: 2;
+                grid-row: 1;
+                gap: 7px;
+            }
+
+            .action-button {
+                min-width: 34px;
+                min-height: 40px;
+            }
+
+            .action-button svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .action-label {
+                display: none;
+            }
+
+            .action-count {
+                right: 2px;
+                transform: none;
+            }
+
+            .search-wrap {
+                grid-column: 1 / -1;
+                grid-row: 2;
+            }
+
+            .search-form {
+                height: 44px;
+            }
+
+            .search-form input {
+                font-size: 12px;
+            }
+
+            .search-submit {
+                width: 48px;
+            }
+
+            .mobile-menu-toggle {
+                width: 34px;
+                min-height: 40px;
+                padding: 0;
+                border: 0;
+                display: grid;
+                place-items: center;
+                background: transparent;
+                color: var(--brand-heading);
+                cursor: pointer;
+            }
+
+            .mobile-menu-toggle svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            .nav-inner {
+                width: 100%;
+                min-height: 44px;
+                padding: 0 12px;
+                overflow-x: auto;
+                scrollbar-width: none;
+            }
+
+            .nav-inner::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-link {
+                min-height: 44px;
+                padding-inline: 12px;
+                font-size: 11px;
+            }
+
+            .nav-link.all-departments {
+                padding-inline: 14px;
+            }
+
+            .nav-spacer {
+                display: none;
+            }
+
+            .mega-menu,
+            .mega-menu.is-open {
+                top: calc(100% + 1px);
+                right: 8px;
+                left: 8px;
+                max-height: min(75vh, 570px);
+                grid-template-columns: 1fr;
+                overflow-y: auto;
+            }
+
+            .mega-content {
+                padding: 20px 17px 22px;
+            }
+
+            .mega-heading {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+                margin-bottom: 17px;
+            }
+
+            .mega-heading h2 {
+                font-size: 15px;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 20px 16px;
+            }
+
+            .category-title {
+                font-size: 11px;
+            }
+
+            .category-list button {
+                font-size: 10px;
+            }
+
+            .mega-aside {
+                padding: 17px;
+                border-top: 1px solid var(--brand-border);
+                border-right: 0;
+            }
+
+            .mega-aside h3 {
+                font-size: 14px;
+            }
+
+            .mega-aside p {
+                margin-bottom: 12px;
+            }
+
+            .popover {
+                position: fixed;
+                top: 142px;
+                right: 16px;
+                left: 16px;
+                width: auto;
+            }
+
+            .header-stage {
+                min-height: calc(100vh - 205px);
+            }
+        }
+
+        @media (max-width: 370px) {
+            .header-main {
+                width: calc(100% - 24px);
+            }
+
+            .brand-name {
+                font-size: 12px;
+            }
+
+            .brand-tagline {
+                font-size: 8px;
+            }
+
+            .header-actions {
+                gap: 3px;
+            }
+
+            .action-button {
+                min-width: 30px;
+            }
+
+            .mobile-menu-toggle {
+                width: 29px;
+            }
+
+            .category-grid {
+                column-gap: 12px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="utility-strip">
+            <div class="utility-inner">
+                <div class="utility-message">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                        aria-hidden="true">
+                        <path d="M3 7h11v10H3zM14 10h4l3 3v4h-7z" />
+                        <circle cx="7.5" cy="18" r="1.5" />
+                        <circle cx="17.5" cy="18" r="1.5" />
+                    </svg>
+                    <span>توصيل مجاني للطلبات فوق ٣٠٠ ريال</span>
+                </div>
+                <div class="utility-links"><button type="button" data-message="تتبع الطلبات متاح بعد إتمام الشراء">تتبع
+                        طلبك</button><button type="button"
+                        data-message="يسعدنا خدمتك يومياً من ٩ صباحاً حتى ١٠ مساءً">خدمة العملاء</button></div>
+            </div>
+        </div>
+        <div class="header-main">
+            <a class="brand" href="#" aria-label="آنية المنزل الراقي، الصفحة الرئيسية" data-message="الصفحة الرئيسية">
+                <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor"
+                        stroke-width="1.4">
+                        <path d="M7 13h18l-2 12H9L7 13Z" />
+                        <path d="M11 13c0-4 2-7 5-7s5 3 5 7M10 17h12M12 21h8" />
+                        <path d="M5 27h22" />
+                    </svg></span>
+                <span class="brand-copy"><span class="brand-name">آنية المنزل الراقي</span><span
+                        class="brand-tagline">تفاصيل تصنع دفء المكان</span></span>
+            </a>
+            <div class="search-wrap">
+                <form class="search-form" id="searchForm" role="search">
+                    <input id="searchInput" type="search" autocomplete="off"
+                        placeholder="ابحث عن أواني، مفروشات، ديكور..." aria-label="ابحث في منتجات المتجر">
+                    <button class="search-submit" type="submit" aria-label="بحث"><svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <circle cx="10.8" cy="10.8" r="6.8" />
+                            <path d="m16 16 5 5" />
+                        </svg></button>
+                </form>
+                <div class="search-suggestions" id="suggestions" role="listbox" aria-label="اقتراحات البحث"></div>
+            </div>
+            <div class="header-actions" aria-label="روابط الحساب والتسوق">
+                <button class="action-button" type="button" data-popover="accountPopover" aria-label="حسابي"
+                    aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="8" r="3.5" />
+                        <path d="M4.5 20c.7-3.6 3.4-5.5 7.5-5.5s6.8 1.9 7.5 5.5" />
+                    </svg><span class="action-label">حسابي</span></button>
+                <button class="action-button" type="button" data-popover="wishlistPopover" aria-label="قائمة الأمنيات"
+                    aria-expanded="false"><span class="action-count">٣</span><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path
+                            d="M20.5 8.8c0 5-8.5 10-8.5 10s-8.5-5-8.5-10A4.3 4.3 0 0 1 12 6.4a4.3 4.3 0 0 1 8.5 2.4Z" />
+                    </svg><span class="action-label">أمنياتي</span></button>
+                <button class="action-button" type="button" data-popover="cartPopover" aria-label="سلة التسوق"
+                    aria-expanded="false"><span class="action-count">٢</span><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M3 4h2l2.1 11.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 1.9-1.5L21 8H6" />
+                        <circle cx="10" cy="20" r="1" />
+                        <circle cx="18" cy="20" r="1" />
+                    </svg><span class="action-label">السلة</span></button>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="إظهار أقسام المتجر"
+                    aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" aria-hidden="true">
+                        <path d="M4 7h16M4 12h16M4 17h16" />
+                    </svg></button>
+            </div>
+        </div>
+        <nav class="nav-bar" aria-label="الأقسام الرئيسية">
+            <div class="nav-inner">
+                <button class="nav-link all-departments" id="allDepartments" type="button" aria-expanded="false"
+                    aria-controls="megaMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+                        <path d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>جميع الأقسام</button>
+                <a class="nav-link is-current" href="#" data-message="تصفح أحدث المنتجات الجديدة">وصل حديثاً</a>
+                <a class="nav-link" href="#" data-message="تصفح العروض والخصومات الحالية">العروض</a>
+                <a class="nav-link" href="#" data-category="المنزل والمطبخ">المنزل والمطبخ</a>
+                <a class="nav-link" href="#" data-category="أثاث المنزل">أثاث المنزل</a>
+                <a class="nav-link" href="#" data-category="العطور والبخور">العطور والبخور</a>
+                <a class="nav-link" href="#" data-category="العناية بالجسم والجمال">العناية والجمال</a>
+                <a class="nav-link" href="#" data-category="التخييم والسفر">التخييم والسفر</a>
+                <span class="nav-spacer"></span><span class="nav-promise">اختيارات راقية لكل زاوية في منزلك</span>
+            </div>
+            <section class="mega-menu" id="megaMenu" aria-label="جميع أقسام المنتجات">
+                <div class="mega-content">
+                    <div class="mega-heading">
+                        <h2>تصفّح جميع الأقسام</h2>
+                        <p>اكتشف قطعاً مختارة لتفاصيل منزلك</p>
+                    </div>
+                    <div class="category-grid">
+                        <div class="category-group"><button class="category-title" type="button"
+                                data-category="المنزل والمطبخ">المنزل والمطبخ</button>
+                            <div class="category-list"><button type="button" data-category="أواني المائدة">أواني
+                                    المائدة</button><button type="button" data-category="أجهزة المطبخ">أجهزة
+                                    المطبخ</button><button type="button" data-category="أدوات الخَبز">أدوات
+                                    الخَبز</button><button type="button" data-category="تخزين وتنظيم">تخزين
+                                    وتنظيم</button></div>
+                        </div>
+                        <div class="category-group"><button class="category-title" type="button"
+                                data-category="العناية بالجسم والجمال">العناية بالجسم والجمال</button>
+                            <div class="category-list"><button type="button" data-category="العناية بالبشرة">العناية
+                                    بالبشرة</button><button type="button" data-category="أجهزة العناية الشخصية">أجهزة
+                                    العناية الشخصية</button><button type="button"
+                                    data-category="مستلزمات الجمال">مستلزمات الجمال</button></div>
+                        </div>
+                        <div class="category-group"><button class="category-title" type="button"
+                                data-category="العطور والبخور">العطور والبخور</button>
+                            <div class="category-list"><button type="button" data-category="عطور منزلية وشخصية">عطور
+                                    منزلية وشخصية</button><button type="button" data-category="بخور ومعمول">بخور
+                                    ومعمول</button><button type="button" data-category="مباخر">مباخر</button></div>
+                        </div>
+                        <div class="category-group"><button class="category-title" type="button"
+                                data-category="أثاث المنزل">أثاث المنزل</button>
+                            <div class="category-list"><button type="button" data-category="أثاث داخلي">أثاث
+                                    داخلي</button><button type="button" data-category="جلسات خارجية">جلسات
+                                    خارجية</button><button type="button" data-category="طاولات ووحدات تخزين">طاولات
+                                    ووحدات تخزين</button></div>
+                        </div>
+                        <div class="category-group"><button class="category-title" type="button"
+                                data-category="مستلزمات الحيوانات الأليفة">مستلزمات الحيوانات الأليفة</button>
+                            <div class="category-list"><button type="button"
+                                    data-category="مستلزمات الكلاب والقطط">مستلزمات الكلاب والقطط</button><button
+                                    type="button" data-category="أوعية الطعام والماء">أوعية الطعام
+                                    والماء</button><button type="button" data-category="ألعاب الحيوانات">ألعاب
+                                    الحيوانات</button></div>
+                        </div>
+                        <div class="category-group"><button class="category-title" type="button"
+                                data-category="أدوات مكتبية">أدوات مكتبية</button>
+                            <div class="category-list"><button type="button" data-category="دفاتر وأوراق">دفاتر
+                                    وأوراق</button><button type="button" data-category="أدوات كتابة">أدوات
+                                    كتابة</button><button type="button" data-category="تنظيم المكتب">تنظيم
+                                    المكتب</button></div>
+                        </div>
+                        <div class="category-group"><button class="category-title" type="button"
+                                data-category="أدوات التنظيف والمواد الاستهلاكية">أدوات التنظيف والمواد
+                                الاستهلاكية</button>
+                            <div class="category-list"><button type="button" data-category="أدوات تنظيف المنزل">أدوات
+                                    تنظيف المنزل</button><button type="button" data-category="مستلزمات التنظيف">مستلزمات
+                                    التنظيف</button><button type="button" data-category="مواد استهلاكية">مواد
+                                    استهلاكية</button></div>
+                        </div>
+                        <div class="category-group"><button class="category-title" type="button"
+                                data-category="التخييم والسفر">التخييم والسفر</button>
+                            <div class="category-list"><button type="button" data-category="مستلزمات التخييم">مستلزمات
+                                    التخييم</button><button type="button" data-category="أدوات السفر">أدوات
+                                    السفر</button><button type="button" data-category="حقائب السفر">حقائب السفر</button>
+                            </div>
+                        </div>
+                        <div class="category-group"><button class="category-title" type="button"
+                                data-category="مستلزمات السيارات">مستلزمات السيارات</button>
+                            <div class="category-list"><button type="button" data-category="تنظيم السيارة">تنظيم
+                                    السيارة</button><button type="button" data-category="إكسسوارات السيارات">إكسسوارات
+                                    السيارات</button><button type="button" data-category="راحة ومساند للسيارة">راحة
+                                    ومساند للسيارة</button></div>
+                        </div>
+                    </div>
+                </div>
+                <aside class="mega-aside">
+                    <p class="aside-kicker">مختارات آنية</p>
+                    <h3>كل ما تحتاجه<br>في مكان واحد</h3>
+                    <p>تسوّق اختيارات عملية للمنزل والعناية والرحلات من تشكيلتنا المتجددة.</p><button class="aside-link"
+                        type="button" data-category="تشكيلة المنزل الراقي">اكتشف التشكيلة <svg viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                            <path d="M5 12h14m-6-6 6 6-6 6" />
+                        </svg></button>
+                </aside>
+            </section>
+        </nav>
+        <section class="popover" id="accountPopover" aria-label="قائمة الحساب">
+            <h3>أهلاً بك في آنية</h3>
+            <p>سجّل الدخول لمتابعة طلباتك وحفظ اختياراتك.</p><button type="button"
+                data-message="تسجيل الدخول سيكون متاحاً عند ربط المتجر">تسجيل الدخول / إنشاء حساب</button>
+        </section>
+        <section class="popover" id="wishlistPopover" aria-label="قائمة الأمنيات">
+            <h3>قائمة أمنياتك</h3>
+            <p>لديك ٣ قطع محفوظة في قائمتك. سجّل الدخول لمزامنتها عبر أجهزتك.</p><button type="button"
+                data-message="قائمة الأمنيات جاهزة للعرض في النسخة المتصلة">عرض قائمة الأمنيات</button>
+        </section>
+        <section class="popover" id="cartPopover" aria-label="سلة التسوق">
+            <h3>سلة التسوق</h3>
+            <p>لديك قطعتان في السلة. إجمالي الطلب: ٤٨٥ ر.س</p><button type="button"
+                data-message="تم فتح معاينة سلة التسوق">متابعة إلى السلة</button>
+        </section>
+    </header>
+    <main class="header-stage" aria-label="مساحة معاينة واجهة المتجر"></main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script>
+        const departmentsButton = document.getElementById('allDepartments');
+        const megaMenu = document.getElementById('megaMenu');
+        const searchInput = document.getElementById('searchInput');
+        const suggestions = document.getElementById('suggestions');
+        const toast = document.getElementById('toast');
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const searchTerms = [
+            ['المنزل والمطبخ', 'أواني المائدة، أدوات المطبخ، والتخزين'],
+            ['العطور والبخور', 'العطور المنزلية، البخور، والمباخر'],
+            ['أثاث المنزل', 'أثاث داخلي، جلسات، ووحدات تخزين'],
+            ['العناية بالجسم والجمال', 'العناية الشخصية وأجهزة الجمال'],
+            ['التخييم والسفر', 'مستلزمات الرحلات وأدوات السفر'],
+            ['مستلزمات الحيوانات الأليفة', 'منتجات العناية والطعام واللعب']
+        ];
+        let toastTimer;
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('is-visible');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2600);
+        }
+
+        function closeMegaMenu() {
+            megaMenu.classList.remove('is-open');
+            departmentsButton.setAttribute('aria-expanded', 'false');
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        function closePopovers() {
+            document.querySelectorAll('.popover.is-open').forEach(popover => popover.classList.remove('is-open'));
+            document.querySelectorAll('[data-popover][aria-expanded="true"]').forEach(button => button.setAttribute('aria-expanded', 'false'));
+        }
+
+        departmentsButton.addEventListener('click', () => {
+            const opening = !megaMenu.classList.contains('is-open');
+            closePopovers();
+            megaMenu.classList.toggle('is-open', opening);
+            departmentsButton.setAttribute('aria-expanded', String(opening));
+            mobileMenuToggle.setAttribute('aria-expanded', String(opening));
+        });
+
+        mobileMenuToggle.addEventListener('click', () => departmentsButton.click());
+
+        document.querySelectorAll('[data-popover]').forEach(button => {
+            button.addEventListener('click', () => {
+                const popover = document.getElementById(button.dataset.popover);
+                const opening = !popover.classList.contains('is-open');
+                closeMegaMenu();
+                closePopovers();
+                popover.classList.toggle('is-open', opening);
+                button.setAttribute('aria-expanded', String(opening));
+            });
+        });
+
+        function renderSuggestions() {
+            const query = searchInput.value.trim();
+            if (!query) {
+                suggestions.classList.remove('is-open');
+                suggestions.replaceChildren();
+                return;
+            }
+            const matches = searchTerms.filter(([name, detail]) => `${name} ${detail}`.includes(query)).slice(0, 4);
+            suggestions.replaceChildren();
+            const heading = document.createElement('div');
+            heading.className = 'suggestion-title';
+            heading.textContent = matches.length ? 'اقتراحات تناسب بحثك' : 'جرّب البحث عن قسم من أقسام المنزل';
+            suggestions.append(heading);
+            matches.forEach(([name, detail]) => {
+                const option = document.createElement('button');
+                option.type = 'button';
+                option.className = 'suggestion-item';
+                option.setAttribute('role', 'option');
+                const label = document.createElement('span');
+                const description = document.createElement('span');
+                label.textContent = name;
+                description.textContent = detail;
+                option.append(label, description);
+                option.addEventListener('click', () => {
+                    searchInput.value = name;
+                    suggestions.classList.remove('is-open');
+                    showToast(`عرض نتائج البحث عن: ${name}`);
+                });
+                suggestions.append(option);
+            });
+            suggestions.classList.add('is-open');
+        }
+
+        searchInput.addEventListener('input', renderSuggestions);
+        document.getElementById('searchForm').addEventListener('submit', event => {
+            event.preventDefault();
+            const query = searchInput.value.trim();
+            if (!query) {
+                searchInput.focus();
+                showToast('اكتب اسم منتج أو قسم للبحث');
+                return;
+            }
+            suggestions.classList.remove('is-open');
+            showToast(`نتائج البحث عن: ${query}`);
+        });
+
+        document.addEventListener('click', event => {
+            if (!megaMenu.contains(event.target) && !departmentsButton.contains(event.target) && !mobileMenuToggle.contains(event.target)) closeMegaMenu();
+            if (!event.target.closest('.search-wrap')) suggestions.classList.remove('is-open');
+            if (!event.target.closest('.action-button') && !event.target.closest('.popover')) closePopovers();
+            const category = event.target.closest('[data-category]');
+            if (category) {
+                event.preventDefault();
+                showToast(`تصفح قسم: ${category.dataset.category}`);
+                closeMegaMenu();
+            }
+            const messageTarget = event.target.closest('[data-message]');
+            if (messageTarget) {
+                event.preventDefault();
+                showToast(messageTarget.dataset.message);
+            }
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                closeMegaMenu();
+                closePopovers();
+                suggestions.classList.remove('is-open');
+                searchInput.blur();
+            }
+        });
+    </script>
+</body>
+
+</html>
